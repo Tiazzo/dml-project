@@ -77,7 +77,7 @@
         const matrix = {{ scores | tojson }};
 
         // Define colors for each model point
-        const colors = ['rgba(255, 153, 153, 0.8)', 'rgba(153, 204, 255, 0.8)', 'rgba(153, 255, 153, 0.8)', 'rgba(255, 204, 153, 0.8)'];
+        const colors = ['rgba(255, 153, 153, 0.8)', 'rgba(153, 204, 255, 0.8)', 'rgba(153, 255, 153, 0.8)', 'rgba(255, 204, 153, 0.8)', 'rgba(0, 0, 0, 0.8)'];
 
         // Prepare scatter plot data for each score type (BLEU, ROUGE-1, ROUGE-2, ROUGE-L)
         const scatterData = [
@@ -87,7 +87,8 @@
                     { x: 1, y: matrix[0][0], model: 'ResNet50 + RNN' },
                     { x: 1, y: matrix[0][1], model: 'ResNet50 + RNN + Att.' },
                     { x: 1, y: matrix[0][2], model: 'VIT + RNN' },
-                    { x: 1, y: matrix[0][3], model: 'GIT' }
+                    { x: 1, y: matrix[0][3], model: 'GIT' },
+                    { x: 1, y: 0.35, pointStyle: 'crossRot' },
                 ],
                 backgroundColor: colors,
                 borderColor: colors,
@@ -99,7 +100,8 @@
                     { x: 2, y: matrix[1][0], model: 'ResNet50 + RNN' },
                     { x: 2, y: matrix[1][1], model: 'ResNet50 + RNN + Att.' },
                     { x: 2, y: matrix[1][2], model: 'VIT + RNN' },
-                    { x: 2, y: matrix[1][3], model: 'GIT' }
+                    { x: 2, y: matrix[1][3], model: 'GIT' },
+                    { x: 2, y: 0.5, pointStyle: 'crossRot' },
                 ],
                 backgroundColor: colors,
                 borderColor: colors,
@@ -111,7 +113,8 @@
                     { x: 3, y: matrix[2][0], model: 'ResNet50 + RNN' },
                     { x: 3, y: matrix[2][1], model: 'ResNet50 + RNN + Att.' },
                     { x: 3, y: matrix[2][2], model: 'VIT + RNN' },
-                    { x: 3, y: matrix[2][3], model: 'GIT' }
+                    { x: 3, y: matrix[2][3], model: 'GIT' },
+                    { x: 3, y: 0.4, pointStyle: 'crossRot' },
                 ],
                 backgroundColor: colors,
                 borderColor: colors,
@@ -123,7 +126,8 @@
                     { x: 4, y: matrix[3][0], model: 'ResNet50 + RNN' },
                     { x: 4, y: matrix[3][1], model: 'ResNet50 + RNN + Att.' },
                     { x: 4, y: matrix[3][2], model: 'VIT + RNN' },
-                    { x: 4, y: matrix[3][3], model: 'GIT' }
+                    { x: 4, y: matrix[3][3], model: 'GIT' },
+                    { x: 4, y: 0.4, pointStyle: 'crossRot' },
                 ],
                 backgroundColor: colors,
                 borderColor: colors,
@@ -134,11 +138,12 @@
         // Configurazione dei dati per lo scatter plot
         const data = {
             datasets: scatterData.flatMap((scoreData, index) => scoreData.data.map((point, i) => ({
-                label: `Model: ${point.model}`,
+                label: point.model ? `Model: ${point.model}` : 'minimum threshold',
                 data: [{ x: point.x, y: point.y }],
                 backgroundColor: colors[i],
                 borderColor: colors[i],
                 pointRadius: 8,
+                pointStyle: point.pointStyle,
                 showLine: false
             })))
         };
